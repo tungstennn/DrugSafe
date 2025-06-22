@@ -30,8 +30,7 @@ Clinicians, regulators, and patients need better tools to assess the **potential
 | 💽 Data Warehouse   | Snowflake                |
 | 🔄 Ingestion        | Python (requests, pandas)|
 | 🧹 Transformation   | pandas, SQL              |
-| ✅ Validation       | Great Expectations or    |
-|                     |     Pandera (optional)   |
+| ✅ Validation       | Great Expectations or Pandera (optional)    |
 | 🤖 Machine Learning | scikit-learn             |
 | ☁️ Orchestration    | Apache Airflow (optional)|
 | 📊 Visualization    | Streamlit / Tableau      |
