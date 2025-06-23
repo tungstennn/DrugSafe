@@ -26,7 +26,7 @@ There is a need for a reliable pipeline that transforms raw reports into clean, 
 - ✅ Load data into **Snowflake** using efficient staging logic
 - ✅ Transform into a **star schema** for analysis
 - ✅ Enable dimensional exploration by patient demographics, reactions, and drug classes
-- ⬜ (Optional) Explore basic machine learning for severity prediction
+- ⬜ (Extension) Explore basic machine learning for severity prediction
 
 ---
 
