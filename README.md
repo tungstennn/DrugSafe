@@ -91,6 +91,3 @@ While this project prioritizes DE best practices, an optional future extension i
 > ⚠️ Note: This ML component is **not a priority** and is deferred until DE foundations are fully implemented.
 
 ---
-
-## 📂 Folder Structure (Preview)
-
