@@ -1,4 +1,4 @@
-# 💊 DrugSafeAI
+# 💊 DrugSafe
 
 > A data engineering pipeline that transforms real-world FDA adverse drug event data into an analyzable, trustworthy dataset for risk analysis and reporting.
 
