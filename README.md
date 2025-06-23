@@ -1,25 +1,32 @@
 # 💊 DrugSafeAI
 
-> A machine learning-powered pipeline for predicting severe adverse drug reactions using real-world FDA data.
+> A data engineering pipeline that transforms real-world FDA adverse drug event data into an analyzable, trustworthy dataset for risk analysis and reporting.
 
 ---
 
 ## 📌 Project Summary
 
-**DrugSafeAI** is an end-to-end data pipeline that ingests publicly available FDA adverse event data and predicts the likelihood of severe outcomes (e.g. hospitalization, death) based on factors such as drug type, patient demographics, and reported reactions.  
-The goal is to build an ML-assisted analytics layer that can surface risk patterns across populations and drug categories — making drug safety data more actionable and insightful.
+**DrugSafeAI** is a data engineering project built to ingest, clean, validate, and transform public healthcare data from the [FDA Adverse Event Reporting System (FAERS)](https://open.fda.gov/apis/drug/event/). The goal is to build an end-to-end ELT pipeline into Snowflake, applying industry-standard practices around data validation, modeling, and analytics delivery.
+
+The focus of this project is to build a **robust, reproducible data pipeline**, aligned with the real-world expectations of data engineering roles — from ingestion to reporting.
 
 ---
 
 ## 🚨 Problem Statement
 
-Millions of adverse drug reactions are reported globally each year, but they're often siloed, unstructured, and hard to interpret at scale.  
-Clinicians, regulators, and patients need better tools to assess the **potential severity** of drug–patient combinations.  
+Adverse drug events are frequently reported by healthcare professionals and patients, but these reports are messy, inconsistent, and difficult to analyze.  
+There is a need for a reliable pipeline that transforms raw reports into clean, structured data to support decision-making around **drug safety trends**, **high-risk populations**, and **drug-outcome relationships**.
 
-**This project aims to:**
-- Clean and structure real-world adverse event data
-- Predict risk of severe outcomes using ML
-- Enable meaningful dimensional analysis of drug safety trends
+---
+
+## 🎯 Project Goals
+
+- ✅ Ingest data via the openFDA Drug Event API
+- ✅ Validate and clean datasets using **Great Expectations**
+- ✅ Load data into **Snowflake** using efficient staging logic
+- ✅ Transform into a **star schema** for analysis
+- ✅ Enable dimensional exploration by patient demographics, reactions, and drug classes
+- ⬜ (Optional) Explore basic machine learning for severity prediction
 
 ---
 
@@ -29,60 +36,61 @@ Clinicians, regulators, and patients need better tools to assess the **potential
 |--------------------|--------------------------|
 | 💽 Data Warehouse   | Snowflake                |
 | 🔄 Ingestion        | Python (requests, pandas)|
-| 🧹 Transformation   | pandas, SQL              |
-| ✅ Validation       | Great Expectations (optional)    |
-| 🤖 Machine Learning | scikit-learn             |
-| ☁️ Orchestration    | Apache Airflow (optional)|
-| 📊 Visualization    | Streamlit / Tableau      |
+| 🧹 Transformation   | pandas + Snowflake SQL   |
+| ✅ Validation       | Great Expectations (optional)      |
+| ☁️ Orchestration    | Apache Airflow|
+| 📊 Dashboard        | Tableau or Streamlit     |
 
 ---
 
-## 🧱 Pipeline Steps
+## 🧱 Pipeline Structure
 
 ### 1. **Extract**
-- Pull adverse event reports from the [FDA Drug Event API](https://open.fda.gov/apis/drug/event/)
-- Store raw JSON into normalized pandas DataFrames
+- Call the FDA Drug Event API to retrieve adverse event records
+- Normalize nested JSON into flat, relational pandas DataFrames
 
 ### 2. **Load**
-- Upload cleaned data into Snowflake staging tables
+- Push raw and cleaned data into Snowflake staging tables
 
-### 3. **Transform**
-- Derive features like:
-  - Age group
-  - Drug class
-  - Reaction keywords
-- Build a **star schema**:  
-  e.g., `fact_adverse_event`, `dim_drug`, `dim_patient`, `dim_time`
+### 3. **Validate**
+- Use **Great Expectations** to apply column-level and dataset-level checks:
+  - Missing values
+  - Valid ranges (e.g., age)
+  - Expected value sets (e.g., gender: M/F/U)
 
-### 4. **Model**
-- Train a simple **Logistic Regression classifier** to predict severity:
-  - **Input**: age, sex, drug name, reaction term
-  - **Output**: probability of severe outcome (e.g. death, hospitalization)
+### 4. **Transform**
+- Create:
+  - `fact_adverse_event`
+  - `dim_patient`
+  - `dim_drug`
+  - `dim_reaction`
+  - `dim_time`
+- Apply SQL logic inside Snowflake for scalable transformation
 
 ### 5. **Serve**
-- Store prediction results back in Snowflake
-- Create visual dashboards or serve scores in a web app
+- Export tables to dashboarding tools or run queries for insights
 
 ---
 
-## 🤖 ML Component (Severity Prediction)
+## 🔍 Example Questions the Data Will Answer
 
-| Feature            | Example Value     |
-|--------------------|------------------|
-| Patient Age        | 67               |
-| Patient Sex        | Female           |
-| Drug Name          | Warfarin         |
-| Reaction Term      | Hemorrhage       |
-
-**Model Output:**  
-`Severity Score = 0.84` → flagged as high-risk
+- Which drugs are most commonly associated with serious outcomes?
+- Are older populations more likely to experience adverse effects for certain drug classes?
+- How do outcomes differ by gender or reporting country?
 
 ---
 
-## 🔍 Potential Insights
+## 🧠 Optional ML Module (Deferred)
 
-- Which drugs are most often associated with high-severity events in the elderly?
-- Are there gender-specific trends in reported drug risks?
-- What’s the geographic distribution of high-risk reports?
+While this project prioritizes DE best practices, an optional future extension includes:
+
+- Training a basic **Logistic Regression** model on drug event data
+- Predicting the severity of outcomes using features like age, sex, drug name, and reaction term
+- Storing model outputs back into Snowflake for further analysis
+
+> ⚠️ Note: This ML component is **not a priority** and is deferred until DE foundations are fully implemented.
 
 ---
+
+## 📂 Folder Structure (Preview)
+
